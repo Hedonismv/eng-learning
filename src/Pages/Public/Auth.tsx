@@ -18,9 +18,9 @@ import {
     useSignInWithEmailAndPassword,
     useSignInWithGoogle
 } from "react-firebase-hooks/auth";
-import {auth} from "../firebaseSettings/firebaseConsts";
-import { useActions } from "../hooks/useActions";
-import { useTypedSelector } from "../hooks/useTypedSelector";
+import {auth} from "../../firebaseSettings/firebaseConsts";
+import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
 interface AuthProps {
     login: boolean
