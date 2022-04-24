@@ -1,10 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
+import {Text} from "@chakra-ui/react";
 
-const Lessons = () => {
+const Lessons:FC = () => {
   return (
-    <div>
-      
-      </div>
+    <Text>Lessons List</Text>
   );
 };
 
