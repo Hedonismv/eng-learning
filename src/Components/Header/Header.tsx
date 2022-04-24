@@ -1,12 +1,11 @@
 import React from 'react';
-import {Box, Container, useColorModeValue, Text, Link, HStack} from "@chakra-ui/react";
+import {Box, Container, useColorModeValue, Text, HStack} from "@chakra-ui/react";
 import {ColorModeSwitcher} from "../../ColorModeSwitcher";
 import {useSignInWithGoogle} from "react-firebase-hooks/auth";
 import {auth} from "../../firebaseSettings/firebaseConsts";
 import { signOut} from "firebase/auth"
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {useActions} from "../../hooks/useActions";
-import {NavLink} from "react-router-dom";
 import StyledLink from "../StyledLink";
 
 const Header = () => {
@@ -52,7 +51,7 @@ const Header = () => {
                     {/*    <Link _hover={{color: "teal.500"}}><NavLink to={'/'}>Home</NavLink></Link>*/}
                     {/*</Box>*/}
                 </Box>
-                {loading ? 'Loading' : <Text>Hello {loggedUser?.displayName}</Text>}
+                {loading ? 'Loading' : <Text>Hello {loggedUser?.displayName ? loggedUser.displayName : loggedUser?.email}</Text>}
                 {loggedUser ? <Text onClick={() => logout()}>Logout</Text> : <Text onClick={() => signInWithGoogle()}>Login With Google</Text>}
                 <ColorModeSwitcher/>
             </Container>
