@@ -10,22 +10,24 @@ import {useEffect} from "react";
 import {useActions} from "./hooks/useActions";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import PublicRoutes from "./routes/PublicRoutes";
+import { useTypedSelector } from "./hooks/useTypedSelector";
 
 export const App = () => {
 
     const [user, loading, error] = useAuthState(auth);
+    const {loggedUser} = useTypedSelector(state => state.user)
     const {setLoggedUser} = useActions()
 
     useEffect(() => {
         if(user){
-            setLoggedUser(user)
+          setLoggedUser(user)
         }
-    }, [user])
+    }, [user, loggedUser])
 
     return (
         <ChakraProvider theme={theme}>
             <Header/>
-            {loading ? 'Loading' : user ? <PrivateRoutes/> : <PublicRoutes/>}
+            {loading ? 'Loading' : user?.emailVerified ? <PrivateRoutes/> : <PublicRoutes/>}
         </ChakraProvider>
     )
 }
