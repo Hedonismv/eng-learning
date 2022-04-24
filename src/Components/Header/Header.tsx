@@ -1,5 +1,16 @@
 import React from 'react';
-import {Box, Container, useColorModeValue, Text, HStack} from "@chakra-ui/react";
+import {
+    Box,
+    Container,
+    useColorModeValue,
+    Text,
+    HStack,
+    Avatar,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem
+} from "@chakra-ui/react";
 import {ColorModeSwitcher} from "../../ColorModeSwitcher";
 import {useSignInWithGoogle} from "react-firebase-hooks/auth";
 import {auth} from "../../firebaseSettings/firebaseConsts";
@@ -7,8 +18,12 @@ import { signOut} from "firebase/auth"
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {useActions} from "../../hooks/useActions";
 import StyledLink from "../StyledLink";
+import { useTimeHandler } from "../../hooks/useTimeHandler";
 
 const Header = () => {
+
+
+    const {greeting} = useTimeHandler()
 
     const [signInWithGoogle, user, loading] = useSignInWithGoogle(auth);
 
@@ -27,8 +42,12 @@ const Header = () => {
         <Box
             as={"nav"}
             w={"100%"}
+            h={'80px'}
+            display={"flex"}
+            alignItems={"center"}
             backgroundColor={useColorModeValue('#ffffff40', '#20202380')}
             style={{backdropFilter: 'blur(10px'}}
+            boxShadow={"xs"}
         >
             <Container
                 display={'flex'}
@@ -41,19 +60,22 @@ const Header = () => {
                 <Box display={'flex'}>
                     <Text>Website Logo</Text>
                     <HStack spacing={5} ml={10}>
-                        <StyledLink to={'/login'} hover={{color: "teal.500"}}>Login</StyledLink>
-                        <StyledLink to={'/register'} hover={{color: "teal.500"}}>Register</StyledLink>
                         <StyledLink to={'/'} hover={{color: "teal.500"}}>Home</StyledLink>
+                        <StyledLink to={'/about'} hover={{color: "teal.500"}}>About team</StyledLink>
                     </HStack>
-                    {/*<Box marginLeft={10} gap={5} display={"flex"}>*/}
-                    {/*    <Link _hover={{color: "teal.500"}}><NavLink to={'/login'}>Login</NavLink></Link>*/}
-                    {/*    <Link _hover={{color: "teal.500"}}><NavLink to={'/register'}>Register</NavLink></Link>*/}
-                    {/*    <Link _hover={{color: "teal.500"}}><NavLink to={'/'}>Home</NavLink></Link>*/}
-                    {/*</Box>*/}
                 </Box>
-                {loading ? 'Loading' : <Text>Hello {loggedUser?.displayName ? loggedUser.displayName : loggedUser?.email}</Text>}
-                {loggedUser ? <Text onClick={() => logout()}>Logout</Text> : <Text onClick={() => signInWithGoogle()}>Login With Google</Text>}
                 <ColorModeSwitcher/>
+                <Box display={"flex"} alignItems={"center"}>
+                    {loading ? 'Loading' : <Text mr={5}>{greeting} {loggedUser?.displayName ? loggedUser.displayName : loggedUser?.email}</Text>}
+                    <Menu>
+                        <MenuButton display={"flex"}>
+                            <Avatar name={loggedUser?.displayName ? loggedUser.displayName : loggedUser?.email!} src={loggedUser?.photoURL!}/>
+                        </MenuButton>
+                        <MenuList>
+                            <MenuItem onClick={() => logout()}>Logout</MenuItem>
+                        </MenuList>
+                    </Menu>
+                </Box>
             </Container>
         </Box>
     );
