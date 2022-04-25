@@ -9,8 +9,7 @@ export const useTimeHandler = ():Greeting => {
 	const [greeting, setGreeting] = useState<string>('')
 
 	useEffect(() => {
-		const time:number = Date.now()
-		const hours:number = new Date(time).getHours()
+		const hours:number = new Date(Date.now()).getHours()
 		if(hours >= 6 && hours <= 9){
 			setGreeting('Доброе утро, ')
 		}else if(hours >= 10 && hours <= 17){
