@@ -1,30 +1,31 @@
 
 export interface ProjectState {
-    files: [...any[], string] | [],
-    cover: string | null,
-    title: string,
-    technology: string,
-    description: string
+    questionData: QuestionData | null
 }
 
+export type QuestionData = {
+    engWords: [
+        {word: string, answerId: number}
+    ],
+    questionAnsId: number,
+    transWord: string
+}
+
+export type AllQuestions = {
+    queData: [QuestionData]
+}
 
 //Actions list
-export type ProjectAction = addImage | addCover
+export type ProjectAction = addQuestion
 
 //Action.types
 export enum ProjectActionTypes {
-    ADD_IMAGE = "ADD_IMAGE",
-    ADD_COVER = "ADD_COVER"
+    ADD_QUESTION = "ADD_QUESTION"
 }
 
 // for each action need it own interface
 
-export interface addImage {
-    type: ProjectActionTypes.ADD_IMAGE;
-    payload: string;
-}
-
-export interface addCover {
-    type: ProjectActionTypes.ADD_COVER;
-    payload: string;
+export interface addQuestion {
+    type: ProjectActionTypes.ADD_QUESTION;
+    payload: object;
 }
