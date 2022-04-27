@@ -25,8 +25,6 @@ const Header = () => {
 
     const {greeting} = useTimeHandler()
 
-    const [signInWithGoogle, user, loading] = useSignInWithGoogle(auth);
-
     const {loggedUser} = useTypedSelector(state => state.user);
     const {logoutUser} = useActions()
 
@@ -64,18 +62,28 @@ const Header = () => {
                         <StyledLink to={'/about'} hover={{color: "teal.500"}}>About team</StyledLink>
                     </HStack>
                 </Box>
-                <ColorModeSwitcher/>
-                <Box display={"flex"} alignItems={"center"}>
-                    {loading ? 'Loading' : <Text mr={5}>{greeting} {loggedUser?.displayName ? loggedUser.displayName : loggedUser?.email}</Text>}
-                    <Menu>
-                        <MenuButton display={"flex"}>
-                            <Avatar name={loggedUser?.displayName ? loggedUser.displayName : loggedUser?.email!} src={loggedUser?.photoURL!}/>
-                        </MenuButton>
-                        <MenuList>
-                            <MenuItem onClick={() => logout()}>Logout</MenuItem>
-                        </MenuList>
-                    </Menu>
-                </Box>
+                {loggedUser?.emailVerified ?
+                    <Box display={"flex"} alignItems={"center"}>
+                        <ColorModeSwitcher mr={10}/>
+                        <Text mr={5}>{greeting} {loggedUser?.displayName ? loggedUser.displayName : loggedUser?.email}</Text>
+                        <Menu>
+                            <MenuButton display={"flex"}>
+                                <Avatar name={loggedUser?.displayName ? loggedUser.displayName : loggedUser?.email!} src={loggedUser?.photoURL!}/>
+                            </MenuButton>
+                            <MenuList>
+                                <MenuItem onClick={() => logout()}>Logout</MenuItem>
+                            </MenuList>
+                        </Menu>
+                    </Box>
+                    :
+                    <Box display={"flex"}>
+                        <HStack spacing={5} ml={10}>
+                            <StyledLink to={'/login'} hover={{color: "teal.500"}}>Login</StyledLink>
+                            <StyledLink to={'/register'} hover={{color: "teal.500"}}>Register</StyledLink>
+                        </HStack>
+                        <ColorModeSwitcher/>
+                    </Box>
+                }
             </Container>
         </Box>
     );
