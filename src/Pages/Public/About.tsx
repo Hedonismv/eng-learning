@@ -1,11 +1,11 @@
 import React, { FC } from "react";
-import { Text } from "@chakra-ui/react";
+import { Text, Container } from "@chakra-ui/react";
 
 const About:FC = () => {
 	return (
-		<div>
+		<Container maxW={"container.lg"}>
 			<Text>About team</Text>
-		</div>
+		</Container>
 	);
 };
 
