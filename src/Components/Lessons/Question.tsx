@@ -1,7 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
-import { Container, Text, Box, Button, VStack } from "@chakra-ui/react";
+import { Container, Text, Box, Button, VStack, useDisclosure } from "@chakra-ui/react";
 import {DocumentData} from 'firebase/firestore/'
 import AnswerItem from "./AnswerItem";
+import {Alert, AlertIcon, AlertTitle, AlertDescription} from "@chakra-ui/react";
+import {CloseButton} from "@chakra-ui/react";
 import { QuestionData } from "../../types/project";
 
 interface QuestionProps {
@@ -11,15 +13,28 @@ interface QuestionProps {
 
 const Question:FC<QuestionProps> = ({queData}) => {
 
+	const [correct, setCorrect] = useState<boolean | null>(null)
+
+	const {
+		isOpen: isVisible,
+		onClose,
+		onOpen,
+	} = useDisclosure({ defaultIsOpen: false })
+
 	const [queNum, setQueNum] = useState<number>(0)
 
 	const {transWord, engWords, questionAnsId} = queData![queNum]
+
+	//progressBar
+	//queNum to localStorage to save session
+
 
 	//validateHandler
 	const validateHandler = (id:number) => {
 		if(id === questionAnsId){
 			handleSkip()
 			console.log('RIGHT');
+			onOpen()
 		}else{
 			console.log('Incorrect');
 		}
@@ -44,8 +59,28 @@ const Question:FC<QuestionProps> = ({queData}) => {
 						<AnswerItem engWord={ew} key={ew.answerId} validateAnswer={validateHandler}/>
 					)}
 				</Box>
-				<Button onClick={() => handleSkip()} width={[120, 200, 250]} backgroundColor={"red.500"}>Пропустить</Button>
 			</VStack>
+			<Box>
+				{isVisible &&
+                  <Alert status='success'>
+                    <AlertIcon />
+                    <Box>
+                      <AlertTitle>Success!</AlertTitle>
+                      <AlertDescription>
+                        Your application has been receivd. We will review your application and
+                        respond within the next 48 hours.
+                      </AlertDescription>
+                    </Box>
+                    <CloseButton
+                      alignSelf='flex-start'
+                      position='relative'
+                      right={-1}
+                      top={-1}
+                      onClick={onClose}
+                    />
+                  </Alert>
+				}
+			</Box>
 		</Container>
 	);
 };
