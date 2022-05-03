@@ -1,6 +1,7 @@
 
 export interface ProjectState {
     questionData: QuestionData | null
+    isCorrectAnswer: boolean
 }
 
 export type QuestionData = {
@@ -16,16 +17,16 @@ export type AllQuestions = {
 }
 
 //Actions list
-export type ProjectAction = addQuestion
+export type ProjectAction = setAnswer
 
 //Action.types
 export enum ProjectActionTypes {
-    ADD_QUESTION = "ADD_QUESTION"
+    SET_ANSWER = "SET_ANSWER"
 }
 
 // for each action need it own interface
 
-export interface addQuestion {
-    type: ProjectActionTypes.ADD_QUESTION;
-    payload: object;
+export interface setAnswer {
+    type: ProjectActionTypes.SET_ANSWER,
+    payload: boolean
 }
