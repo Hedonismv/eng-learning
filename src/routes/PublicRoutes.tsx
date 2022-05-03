@@ -14,7 +14,7 @@ const PublicRoutes = () => {
             <Route path={'/about'} element={<About/>}/>
             <Route path={'/login'} element={<Auth login={true}/>}/>
             <Route path={'/register'} element={<Auth login={false}/>}/>
-            <Route path={'*'} element={<Navigate to={'/'}/>}/>
+            <Route path={'*'} element={<Navigate to={'/login'}/>}/>
         </Routes>
     );
 };
