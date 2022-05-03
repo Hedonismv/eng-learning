@@ -2,16 +2,17 @@
 import {ProjectAction, ProjectActionTypes, ProjectState} from "../../types/project";
 
 const initialState: ProjectState = {
-    questionData: null
+    questionData: null,
+    isCorrectAnswer: false
 }
 
 
 export const projectReducer = (state = initialState, action: ProjectAction):ProjectState => {
     switch (action.type) {
-        case ProjectActionTypes.ADD_QUESTION:
-            return <ProjectState>{
+        case ProjectActionTypes.SET_ANSWER:
+            return {
                 ...state,
-                questionData: action.payload
+                isCorrectAnswer: action.payload
             }
         default:
             return state
