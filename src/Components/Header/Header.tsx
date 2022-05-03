@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Container,
@@ -9,18 +9,22 @@ import {
     Menu,
     MenuButton,
     MenuList,
-    MenuItem
+    MenuItem, Image
 } from "@chakra-ui/react";
 import {ColorModeSwitcher} from "../../ColorModeSwitcher";
-import {useSignInWithGoogle} from "react-firebase-hooks/auth";
 import {auth} from "../../firebaseSettings/firebaseConsts";
 import { signOut} from "firebase/auth"
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {useActions} from "../../hooks/useActions";
 import StyledLink from "../StyledLink";
 import { useTimeHandler } from "../../hooks/useTimeHandler";
+import { useLocation, useParams } from "react-router";
 
 const Header = () => {
+
+    const {pathname} = useLocation()
+
+    const [visible, setVisible] = useState<string>('flex')
 
 
     const {greeting} = useTimeHandler()
@@ -35,13 +39,21 @@ const Header = () => {
             .catch(error => console.log(error.message));
     }
 
+    useEffect(() => {
+        if(pathname === '/'){
+            setVisible('none')
+        }else{
+            setVisible('flex')
+        }
+    }, [pathname])
+
 
     return (
         <Box
             as={"nav"}
             w={"100%"}
             h={'80px'}
-            display={"flex"}
+            display={visible}
             alignItems={"center"}
             backgroundColor={useColorModeValue('#ffffff40', '#20202380')}
             style={{backdropFilter: 'blur(10px'}}
@@ -56,7 +68,9 @@ const Header = () => {
                 p={2}
             >
                 <Box display={'flex'}>
-                    <Text>Website Logo</Text>
+                    <Box>
+                        <Image src={'/movaLogo.png'} alt={'MovaLogo'} width={[10,20,120]}/>
+                    </Box>
                     <HStack spacing={5} ml={10}>
                         <StyledLink to={'/'} hover={{color: "teal.500"}}>Home</StyledLink>
                         <StyledLink to={'/about'} hover={{color: "teal.500"}}>About team</StyledLink>
