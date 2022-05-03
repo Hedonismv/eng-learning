@@ -1,10 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
-import { Container, Text, Box, Button, VStack, useDisclosure } from "@chakra-ui/react";
+import { Container, Text, Box, Button, VStack, useDisclosure, Progress } from "@chakra-ui/react";
 import {DocumentData} from 'firebase/firestore/'
 import AnswerItem from "./AnswerItem";
-import {Alert, AlertIcon, AlertTitle, AlertDescription} from "@chakra-ui/react";
-import {CloseButton} from "@chakra-ui/react";
-import { QuestionData } from "../../types/project";
+import { useActions } from "../../hooks/useActions";
 
 interface QuestionProps {
 	queData: DocumentData[] | undefined
@@ -13,15 +11,10 @@ interface QuestionProps {
 
 const Question:FC<QuestionProps> = ({queData}) => {
 
-	const [correct, setCorrect] = useState<boolean | null>(null)
-
-	const {
-		isOpen: isVisible,
-		onClose,
-		onOpen,
-	} = useDisclosure({ defaultIsOpen: false })
+	const {setAnswer} = useActions()
 
 	const [queNum, setQueNum] = useState<number>(0)
+	const [percent, setPercent] = useState<number>(0)
 
 	const {transWord, engWords, questionAnsId} = queData![queNum]
 
@@ -30,11 +23,12 @@ const Question:FC<QuestionProps> = ({queData}) => {
 
 
 	//validateHandler
-	const validateHandler = (id:number) => {
-		if(id === questionAnsId){
+	const validateHandler = (id:boolean) => {
+		if(id){
 			handleSkip()
 			console.log('RIGHT');
-			onOpen()
+			setAnswer(true)
+			setPercent( prevState => prevState + 100 / queData?.length!)
 		}else{
 			console.log('Incorrect');
 		}
@@ -51,37 +45,19 @@ const Question:FC<QuestionProps> = ({queData}) => {
 	}
 
 	return (
-		<Container maxW={"container.sm"}>
-			<VStack>
-			<Text fontSize={"xx-large"}>{transWord}</Text>
-				<Box display={"flex"} justifyContent={"space-between"} flexWrap={"wrap"}>
-					{engWords.map((ew:any) =>
-						<AnswerItem engWord={ew} key={ew.answerId} validateAnswer={validateHandler}/>
-					)}
-				</Box>
-			</VStack>
-			<Box>
-				{isVisible &&
-                  <Alert status='success'>
-                    <AlertIcon />
-                    <Box>
-                      <AlertTitle>Success!</AlertTitle>
-                      <AlertDescription>
-                        Your application has been receivd. We will review your application and
-                        respond within the next 48 hours.
-                      </AlertDescription>
-                    </Box>
-                    <CloseButton
-                      alignSelf='flex-start'
-                      position='relative'
-                      right={-1}
-                      top={-1}
-                      onClick={onClose}
-                    />
-                  </Alert>
-				}
-			</Box>
-		</Container>
+		<>
+			<Container maxW={"container.sm"}>
+				<Progress value={percent} mb={9} colorScheme={'green'} borderRadius={3}/>
+				<VStack>
+					<Text fontSize={"xx-large"}>{transWord}</Text>
+					<Box display={"flex"} justifyContent={"space-between"} flexWrap={"wrap"}>
+						{engWords.map((ew:any, index:number) =>
+							<AnswerItem engWord={ew} key={index} validateAnswer={validateHandler}/>
+						)}
+					</Box>
+				</VStack>
+			</Container>
+		</>
 	);
 };
 
