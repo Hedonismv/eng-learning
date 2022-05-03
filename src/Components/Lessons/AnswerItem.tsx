@@ -4,9 +4,9 @@ import {Box,Text} from "@chakra-ui/react";
 export interface AnswerItemProps {
 	engWord: {
 		word: string,
-		answerId: number
+		answerId: boolean
 	},
-	validateAnswer: (id:number) => void
+	validateAnswer: (id:boolean) => void
 }
 
 const AnswerItem:FC<AnswerItemProps> = ({engWord, validateAnswer}) => {
