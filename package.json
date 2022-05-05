@@ -34,6 +34,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
     "typescript": "^4.6.3",
+    "use-sound": "^4.0.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
