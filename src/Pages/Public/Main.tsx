@@ -95,12 +95,12 @@ const Main = () => {
                 />
             </Box>
             <Box width={'55%'} height={'100%'} backgroundColor={'black'} display={"flex"}>
-                <Box padding={'20px'} display={"flex"} flexDirection={"column"} justifyContent={"space-between"} alignItems={"flex-start"}>
+                <Box padding={'10px 20px 50px 20px'} display={"flex"} flexDirection={"column"} justifyContent={"space-between"} alignItems={"flex-start"}>
                     <Box maxWidth={"40px"}>
                         <Image src={'/smallLogoWhite.svg'}/>
                     </Box>
                     <VStack justifyContent={"space-between"} spacing={7} alignItems={"flex-start"}>
-                        <Text fontSize={"5xl"} fontWeight={"extrabold"} as={"h1"} color={'#ffffff'}>Изучай новые языки с помощью нашей платформы</Text>
+                        <Text fontSize={"5xl"} fontWeight={"extrabold"} as={"h1"} color={'#ffffff'}>Изучай новые языки с помощью нашей L2E платформы</Text>
                         <Text fontSize={"3xl"} fontWeight={"bold"} as={'h2'} color={"#ffffff"}>Присоединяйся к сети MOVA прямо сейчас!</Text>
                     </VStack>
                     <VStack justifyContent={"center"} alignItems={"flex-start"} spacing={10}>
@@ -115,7 +115,7 @@ const Main = () => {
                             </StyledLink>
                         </VStack>
                         <VStack spacing={7} alignItems={"flex-start"}>
-                            <Text fontSize={'1xl'} fontWeight={"bold"} as={"h4"} color={'#ffffff'}>Уже зарегестрированы?</Text>
+                            <Text fontSize={'1xl'} fontWeight={"bold"} as={"h4"} color={'#ffffff'}>Уже зарегистрированы?</Text>
                             <StyledLink to={'/login'}>
                                 <Button colorScheme={'twitter'} width={[100,200,300]} leftIcon={<FiLogIn/>}>Войти</Button>
                             </StyledLink>
