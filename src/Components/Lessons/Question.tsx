@@ -1,8 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
-import { Container, Text, Box, Button, VStack, useDisclosure, Progress } from "@chakra-ui/react";
+import { Container, Text, Box, VStack, Progress } from "@chakra-ui/react";
 import {DocumentData} from 'firebase/firestore/'
 import AnswerItem from "./AnswerItem";
 import { useActions } from "../../hooks/useActions";
+import {useSound} from 'use-sound';
 
 interface QuestionProps {
 	queData: DocumentData[] | undefined
@@ -11,10 +12,12 @@ interface QuestionProps {
 
 const Question:FC<QuestionProps> = ({queData}) => {
 
-	const {setAnswer} = useActions()
+	const {setAnswer, addQuestion, completeProgram} = useActions()
 
 	const [queNum, setQueNum] = useState<number>(0)
 	const [percent, setPercent] = useState<number>(0)
+
+	const [playCorrect] = useSound('/sounds/correct.wav')
 
 	const {transWord, engWords, questionAnsId} = queData![queNum]
 
@@ -26,11 +29,13 @@ const Question:FC<QuestionProps> = ({queData}) => {
 	const validateHandler = (id:boolean) => {
 		if(id){
 			handleSkip()
-			console.log('RIGHT');
+			playCorrect()
 			setAnswer(true)
 			setPercent( prevState => prevState + 100 / queData?.length!)
 		}else{
-			console.log('Incorrect');
+			setPercent( prevState => prevState + 100 / queData?.length!)
+			setAnswer(false)
+			handleSkip()
 		}
 	}
 
@@ -43,6 +48,18 @@ const Question:FC<QuestionProps> = ({queData}) => {
 			setQueNum(prevState => prevState + 1)
 		}
 	}
+
+	useEffect(() => {
+		if(percent >= 100){
+			completeProgram(true)
+		}
+	}, [percent])
+
+	useEffect(() => {
+		if(queData){
+			addQuestion(queData.length!)
+		}
+	},[queData])
 
 	return (
 		<>
