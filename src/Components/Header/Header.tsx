@@ -69,10 +69,9 @@ const Header = () => {
             >
                 <Box display={'flex'}>
                     <Box>
-                        <Image src={'/movaLogoBlack.png'} alt={'MovaLogo'} width={[10,20,120]}/>
+                        <StyledLink to={'/'}><Image src={'/movaLogoBlack.png'} alt={'MovaLogo'} width={[10,20,120]}/></StyledLink>
                     </Box>
                     <HStack spacing={5} ml={10}>
-                        <StyledLink to={'/'} hover={{color: "teal.500"}}>Home</StyledLink>
                         <StyledLink to={'/about'} hover={{color: "teal.500"}}>About team</StyledLink>
                     </HStack>
                 </Box>
