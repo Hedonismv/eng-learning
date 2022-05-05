@@ -1,5 +1,5 @@
 import React, { Dispatch, FC, SetStateAction } from "react";
-import {Box,Text} from "@chakra-ui/react";
+import { Box, Text, useColorModeValue } from "@chakra-ui/react";
 
 export interface AnswerItemProps {
 	engWord: {
@@ -28,7 +28,7 @@ const AnswerItem:FC<AnswerItemProps> = ({engWord, validateAnswer}) => {
 			mx={5}
 			cursor={"pointer"}
 		>
-			<Text>{engWord.word}</Text>
+			<Text color={useColorModeValue('#000000','#000000')}>{engWord.word}</Text>
 		</Box>
 	);
 };
