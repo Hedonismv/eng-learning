@@ -6,7 +6,7 @@ import { useActions } from "../hooks/useActions";
 const CorrectIncorrect = () => {
 
 	//Redux
-	const { isCorrectAnswer} = useTypedSelector(state => state.project)
+	const { isCorrectAnswer, statistic} = useTypedSelector(state => state.project)
 	const {setAnswer} = useActions()
 
 	const {
@@ -15,20 +15,21 @@ const CorrectIncorrect = () => {
 		onOpen,
 	} = useDisclosure({ defaultIsOpen: false })
 
+	//Need refactoring
 	useEffect(() => {
-		if(isCorrectAnswer){
+		if(isCorrectAnswer !== null) {
 			onOpen()
 			setTimeout(() => {
 				onClose()
-				setAnswer(false)
-			}, 4000)
+				setAnswer(null)
+			}, 3000)
 		}
 	}, [isCorrectAnswer])
 
 	return (
 		isVisible ?
 			<Alert
-				status='success'
+				status={isCorrectAnswer ? 'success' : 'error'}
 				height={"3xs"}
 				position={"absolute"}
 				bottom={0}
@@ -38,7 +39,7 @@ const CorrectIncorrect = () => {
 			>
 				<AlertIcon />
 				<Box>
-					<AlertTitle>Правильно!</AlertTitle>
+					<AlertTitle>{isCorrectAnswer ? 'Правильно!' : 'Не верно'}</AlertTitle>
 					<AlertDescription>
 						Your application has been receivd. We will review your application and
 						respond within the next 48 hours.
