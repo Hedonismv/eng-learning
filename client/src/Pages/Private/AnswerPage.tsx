@@ -15,9 +15,9 @@ const AnswerPage:FC = () => {
 	//Redux
 	const {isProgramCompleted} = useTypedSelector(state => state.project)
 
-	const {lvl, mode} = useParams()
+	const {lang, lvl, mode} = useParams()
 
-	const questionRef = collection(firestore,`lessons/english/${lvl}/${mode}/questions`)
+	const questionRef = collection(firestore,`lessons/${lang}/${lvl}/${mode}/questions`)
 	const [values, loading, error] = useCollectionDataOnce(questionRef)
 
 	return (

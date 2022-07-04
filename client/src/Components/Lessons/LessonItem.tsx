@@ -20,11 +20,11 @@ const LessonItem:FC<LessonItemProps> = ({to}) => {
 		<Box
 			onClick={() => navigate(to)}
 			borderRadius={10}
-			backgroundColor={"teal.300"}
+			backgroundColor={"#7575FF"}
 			w={[200,300,400]}
 			h={[100,150,220]}
 			cursor={"pointer"}
-			_hover={{backgroundColor: "teal.700"}}
+			_hover={{opacity: 0.8}}
 		/>
 
 	);

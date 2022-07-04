@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
     Box,
     Container,
@@ -18,9 +18,9 @@ import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {useActions} from "../../hooks/useActions";
 import StyledLink from "../StyledLink";
 import { useTimeHandler } from "../../hooks/useTimeHandler";
-import { useLocation, useParams } from "react-router";
+import { useLocation } from "react-router";
 
-const Header = () => {
+const Header:FC = () => {
 
     const {pathname} = useLocation()
 
@@ -72,7 +72,8 @@ const Header = () => {
                         <StyledLink to={'/'}><Image src={'/movaLogoBlack.png'} alt={'MovaLogo'} width={[10,20,120]}/></StyledLink>
                     </Box>
                     <HStack spacing={5} ml={10}>
-                        <StyledLink to={'/about'} hover={{color: "teal.500"}}>About team</StyledLink>
+                        <StyledLink to={'/lessons'} hover={{color: "#7575FF"}}>Выбрать язык</StyledLink>
+                        <StyledLink to={'/about'} hover={{color: "#7575FF"}}>О команде</StyledLink>
                     </HStack>
                 </Box>
                 {loggedUser?.emailVerified ?
