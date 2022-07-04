@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { Container, Text, Box, VStack, Progress } from "@chakra-ui/react";
-import {DocumentData} from 'firebase/firestore/'
+import {DocumentData} from 'client/src/Components/Lessons/Question'
 import AnswerItem from "./AnswerItem";
 import { useActions } from "../../hooks/useActions";
 import {useSound} from 'use-sound';
